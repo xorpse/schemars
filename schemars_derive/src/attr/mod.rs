@@ -2,6 +2,8 @@ mod doc;
 mod schemars_to_serde;
 mod validation;
 
+use std::collections::BTreeMap;
+
 pub use schemars_to_serde::process_serde_attrs;
 pub use validation::ValidationAttrs;
 
@@ -28,6 +30,7 @@ pub struct Attrs {
     pub repr: Option<syn::Type>,
     pub crate_name: Option<syn::Path>,
     pub is_renamed: bool,
+    pub extensions: BTreeMap<String, String>,
 }
 
 #[derive(Debug)]
@@ -73,6 +76,7 @@ impl Attrs {
             read_only: false,
             write_only: false,
             default: None,
+            extensions: &self.extensions,
         }
     }
 
@@ -165,6 +169,13 @@ impl Attrs {
                     }
                 }
 
+                Meta(meta@NameValue(m)) if !is_known_serde_or_validation_keyword(meta) && m.path.get_ident().is_some() => {
+                    let ident = m.path.get_ident().unwrap().to_string();
+                    if let Ok(value) = get_lit_str(errors, attr_type, &ident, &m.lit) {
+                        self.extensions.insert(ident, value.value());
+                    }
+                }
+
                 _ if ignore_errors => {}
 
                 Meta(meta_item) => {
@@ -200,7 +211,8 @@ impl Attrs {
                 repr: None,
                 crate_name: None,
                 is_renamed: _,
-            } if examples.is_empty() => true,
+                extensions,
+            } if examples.is_empty() && extensions.is_empty() => true,
             _ => false,
         }
     }
@@ -245,8 +257,8 @@ fn get_meta_items(
 
 fn get_lit_str<'a>(
     cx: &Ctxt,
-    attr_type: &'static str,
-    meta_item_name: &'static str,
+    attr_type: &str,
+    meta_item_name: &str,
     lit: &'a syn::Lit,
 ) -> Result<&'a syn::LitStr, ()> {
     if let syn::Lit::Str(lit) = lit {
@@ -265,8 +277,8 @@ fn get_lit_str<'a>(
 
 fn parse_lit_into_ty(
     cx: &Ctxt,
-    attr_type: &'static str,
-    meta_item_name: &'static str,
+    attr_type: &str,
+    meta_item_name: &str,
     lit: &syn::Lit,
 ) -> Result<syn::Type, ()> {
     let string = get_lit_str(cx, attr_type, meta_item_name, lit)?;
@@ -285,8 +297,8 @@ fn parse_lit_into_ty(
 
 fn parse_lit_into_path(
     cx: &Ctxt,
-    attr_type: &'static str,
-    meta_item_name: &'static str,
+    attr_type: &str,
+    meta_item_name: &str,
     lit: &syn::Lit,
 ) -> Result<syn::Path, ()> {
     let string = get_lit_str(cx, attr_type, meta_item_name, lit)?;

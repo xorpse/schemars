@@ -1,3 +1,4 @@
+use crate::Map;
 use crate::flatten::Merge;
 use crate::gen::SchemaGenerator;
 use crate::schema::{Metadata, Schema, SchemaObject};
@@ -31,6 +32,16 @@ pub fn apply_metadata(schema: Schema, metadata: Metadata) -> Schema {
     } else {
         let mut schema_obj = schema.into_object();
         schema_obj.metadata = Some(Box::new(metadata)).merge(schema_obj.metadata);
+        Schema::Object(schema_obj)
+    }
+}
+
+pub fn apply_extensions(schema: Schema, extensions: Map<String, Value>) -> Schema {
+    if extensions.is_empty() {
+        schema
+    } else {
+        let mut schema_obj = schema.into_object();
+        schema_obj.extensions = extensions.merge(schema_obj.extensions);
         Schema::Object(schema_obj)
     }
 }

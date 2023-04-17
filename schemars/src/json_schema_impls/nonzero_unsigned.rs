@@ -13,8 +13,8 @@ macro_rules! nonzero_unsigned_impl {
             }
 
             fn json_schema(gen: &mut SchemaGenerator) -> Schema {
-                let mut schema: SchemaObject = <$primitive>::json_schema(gen).into();
-                schema.number().minimum = Some(1.0);
+                let /* mut */ schema: SchemaObject = <$primitive>::json_schema(gen).into();
+                // schema.number().minimum = Some(1.0);
                 schema.into()
             }
         }

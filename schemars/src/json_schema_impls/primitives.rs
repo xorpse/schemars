@@ -65,12 +65,12 @@ macro_rules! unsigned_impl {
             }
 
             fn json_schema(_: &mut SchemaGenerator) -> Schema {
-                let mut schema = SchemaObject {
+                let /* mut */ schema = SchemaObject {
                     instance_type: Some(InstanceType::$instance_type.into()),
                     format: Some($format.to_owned()),
                     ..Default::default()
                 };
-                schema.number().minimum = Some(0.0);
+                //schema.number().minimum = Some(0.0);
                 schema.into()
             }
         }

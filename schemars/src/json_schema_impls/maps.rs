@@ -32,3 +32,6 @@ macro_rules! map_impl {
 
 map_impl!(<K, V> JsonSchema for std::collections::BTreeMap<K, V>);
 map_impl!(<K, V, H> JsonSchema for std::collections::HashMap<K, V, H>);
+
+#[cfg(feature = "ahash")]
+forward_impl!((<K, V, R> JsonSchema for ahash::AHashMap<K, V, R> where K: JsonSchema, V: JsonSchema) => std::collections::HashMap<K, V, R>);

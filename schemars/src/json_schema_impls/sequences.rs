@@ -65,3 +65,6 @@ seq_impl!(<T> JsonSchema for std::collections::VecDeque<T>);
 
 set_impl!(<T> JsonSchema for std::collections::BTreeSet<T>);
 set_impl!(<T, H> JsonSchema for std::collections::HashSet<T, H>);
+
+#[cfg(feature = "ahash")]
+forward_impl!((<T, H> JsonSchema for ahash::AHashSet<T, H> where T: JsonSchema) => std::collections::HashSet<T, H>);

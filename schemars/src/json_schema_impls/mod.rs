@@ -72,6 +72,10 @@ mod tuple;
 mod url;
 #[cfg(feature = "uuid08")]
 mod uuid08;
+#[cfg(feature = "uuid10")]
+mod uuid10;
+#[cfg(feature = "uuid11")]
+mod uuid11;
 #[cfg(feature = "uuid1")]
 mod uuid1;
 mod wrapper;

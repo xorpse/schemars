@@ -24,13 +24,11 @@
       "properties": {
         "secs": {
           "type": "integer",
-          "format": "uint64",
-          "minimum": 0.0
+          "format": "uint64"
         },
         "nanos": {
           "type": "integer",
-          "format": "uint32",
-          "minimum": 0.0
+          "format": "uint32"
         }
       }
     },
@@ -43,13 +41,11 @@
       "properties": {
         "secs_since_epoch": {
           "type": "integer",
-          "format": "uint64",
-          "minimum": 0.0
+          "format": "uint64"
         },
         "nanos_since_epoch": {
           "type": "integer",
-          "format": "uint32",
-          "minimum": 0.0
+          "format": "uint32"
         }
       }
     }

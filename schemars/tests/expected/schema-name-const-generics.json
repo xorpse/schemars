@@ -1,17 +1,12 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "A",
+  "title": "const-generics-z-42",
   "type": "object",
   "required": [
-    "v",
-    "x"
+    "foo"
   ],
   "properties": {
-    "x": {
-      "type": "integer",
-      "format": "uint8"
-    },
-    "v": {
+    "foo": {
       "type": "integer",
       "format": "int32"
     }

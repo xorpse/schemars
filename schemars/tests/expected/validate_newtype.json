@@ -3,6 +3,5 @@
   "title": "NewType",
   "type": "integer",
   "format": "uint8",
-  "maximum": 10.0,
-  "minimum": 0.0
+  "maximum": 10.0
 }

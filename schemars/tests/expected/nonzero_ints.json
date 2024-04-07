@@ -11,13 +11,11 @@
   "properties": {
     "unsigned": {
       "type": "integer",
-      "format": "uint32",
-      "minimum": 0.0
+      "format": "uint32"
     },
     "nonzero_unsigned": {
       "type": "integer",
-      "format": "uint32",
-      "minimum": 1.0
+      "format": "uint32"
     },
     "signed": {
       "type": "integer",

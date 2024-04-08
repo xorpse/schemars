@@ -14,7 +14,7 @@ build = "build.rs"
 rust-version = "1.60"
 
 [dependencies]
-schemars_derive = { version = "=0.8.16", optional = true, path = "../schemars_derive" }
+schemars_derive = { version = "=0.8.16", optional = true, path = "../schemars_derive", registry = "binarly" }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0.25"
 dyn-clone = "1.0"
